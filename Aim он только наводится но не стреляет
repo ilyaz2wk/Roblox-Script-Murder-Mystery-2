@@ -1,0 +1,21 @@
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+
+while wait() do
+    local closestDistance = math.huge
+    local target = nil
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = player.Character.HumanoidRootPart
+            local distance = (rootPart.Position - character.HumanoidRootPart.Position).Magnitude
+            if distance < closestDistance then
+                closestDistance = distance
+                target = rootPart
+            end
+        end
+    end
+    if target then
+        print("Ближайший противник найден, дистанция:", closestDistance)
+    end
+end
